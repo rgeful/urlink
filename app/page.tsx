@@ -12,24 +12,24 @@ export default function Home() {
             More than just a link, <br /> it&apos;s your social home.
           </h1>
           <p className="text-gray-600 max-w-md">
-            URLink lets creators share all their links, posts, and followers in one clean,
+            UrLink lets creators share all their links, posts, and followers in one clean,
             social-style profile.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
-            <div className="flex items-center border border-gray-400 rounded-full px-4 py-2 flex-1">
+            <div className="flex items-center border border-gray-400 rounded-full px-4 py-2 w-full max-w-2xl">
               <span className="text-gray-400 text-sm mr-2">urlink.app/</span>
               <input
-                className="flex-1 outline-none text-sm"
+                className="flex-1 outline-none text-sm min-w-0"
                 placeholder="yourname"
               />
+              <a
+                href="/signup"
+                className="px-6 py-2 rounded-full bg-black text-white text-sm font-medium ml-2 hover:bg-gray-900 transition-colors"
+              >
+                Create UrLink
+              </a>
             </div>
-            <a
-              href="/signup"
-              className="px-6 py-2 rounded-full bg-black text-white text-sm font-medium"
-            >
-              Create UrLink
-            </a>
           </div>
         </div>
       </section>
