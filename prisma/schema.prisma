@@ -1,0 +1,75 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         String    @id @default(cuid())
+  email      String    @unique
+  username   String    @unique
+  bio        String?
+  avatarUrl  String?
+  plan       Plan      @default(FREE)
+  createdAt  DateTime  @default(now())
+
+  links      Link[]
+  posts      Post[]
+  likes      Like[]
+  followers  Follow[]  @relation("followers")
+  following  Follow[]  @relation("following")
+}
+
+model Link {
+  id         String    @id @default(cuid())
+  userId     String
+  title      String
+  url        String
+  imageUrl   String?
+  clickCount Int       @default(0)
+  orderIndex Int       @default(0)
+  createdAt  DateTime  @default(now())
+
+  user       User      @relation(fields: [userId], references: [id])
+}
+
+model Post {
+  id              String    @id @default(cuid())
+  userId          String
+  contentText     String?
+  imageUrl        String?
+  originalPostId  String?
+  createdAt       DateTime  @default(now())
+
+  user            User      @relation(fields: [userId], references: [id])
+  likes           Like[]
+  originalPost    Post?     @relation("Reposts", fields: [originalPostId], references: [id])
+  reposts         Post[]    @relation("Reposts")
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
+}
+
+model Follow {
+  id           String   @id @default(cuid())
+  followerId   String
+  followingId  String
+  createdAt    DateTime @default(now())
+
+  follower     User     @relation("followers", fields: [followerId], references: [id])
+  following    User     @relation("following", fields: [followingId], references: [id])
+}
+
+enum Plan {
+  FREE
+  PRO
+}
