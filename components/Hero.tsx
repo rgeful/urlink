@@ -1,15 +1,6 @@
-import Image from "next/image";
-import NavBar from "../components/NavBar";
-import Hero from "../components/Hero";
-import Footer from "../components/Footer";
-
-export default function Home() {
-  return (
-    <main className="min-h-screen bg-white text-black">
-
-      <NavBar />
-      <Hero />
-      <section className="px-4 sm:px-8 md:px-16 lg:px-64 py-20 sm:py-32 md:py-44 grid gap-8 sm:gap-12 lg:grid-cols-2 items-center">
+export default function Hero() {
+    return (
+<section className="px-4 sm:px-8 md:px-16 lg:px-64 py-20 sm:py-32 md:py-44 grid gap-8 sm:gap-12 lg:grid-cols-2 items-center">
         <div className="space-y-4 sm:space-y-6">
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight">
             a beautiful home <br /> for your online presence
@@ -43,7 +34,5 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <Footer />
-    </main>
-  );
+    );
 }
