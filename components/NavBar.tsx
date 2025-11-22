@@ -50,7 +50,7 @@ export default function NavBar() {
           </a>
           <a
             href="/signup"
-            className="px-3 py-2 sm:px-6 sm:py-3 rounded-full bg-gray-950 text-white hover:bg-gray-900 transition-colors text-sm sm:text-base"
+            className="px-3 py-2 sm:px-6 sm:py-3 rounded-full bg-[#111] text-white hover:bg-black transition-colors text-sm sm:text-base"
           >
             sign up
           </a>

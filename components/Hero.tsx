@@ -19,7 +19,7 @@ export default function Hero() {
               />
               <a
                 href="/signup"
-                className="hidden sm:block px-6 py-2 rounded-full bg-gray-950 text-white text-sm font-medium hover:bg-gray-900 transition-colors ml-2 shrink-0"
+                className="hidden sm:block px-6 py-2 rounded-full bg-[#111] text-white text-sm font-medium hover:bg-black transition-colors ml-2 shrink-0"
               >
                 create UrLink
               </a>
