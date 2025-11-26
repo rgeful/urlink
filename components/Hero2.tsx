@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Hero2() {
   return (
-    <section className="w-full flex justify-center px-4 py-18">
+    <section className="w-full flex justify-center px-8 py-18">
       <div className="w-full max-w-[1800px] rounded-[40px] bg-linear-to-br from-[#B4E4FF] via-[#D1F1FF] to-[#E4D7FF] overflow-hidden shadow-xl">
         <div className="flex flex-col items-center gap-12 px-8 py-16 md:flex-row md:items-center md:justify-between">
 
