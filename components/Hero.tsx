@@ -12,7 +12,7 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
             <div className="flex items-center border border-gray-300 rounded-full px-3 sm:px-4 py-2 sm:py-2 w-full max-w-2xl">
-              <span className="text-gray-400 text-xs sm:text-sm mr-2 whitespace-nowrap">urlink.app/</span>
+              <span className="text-gray-400 text-xs sm:text-sm mr-0.5 whitespace-nowrap">urlink.app/</span>
               <input
                 className="flex-1 outline-none text-xs sm:text-sm min-w-0"
                 placeholder="urname"

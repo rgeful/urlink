@@ -53,7 +53,7 @@ export default function LoginPage() {
           <div className="space-y-2">
             <h1 className="text-4xl font-semibold">Welcome back</h1>
             <p className="mt-1 text-sm text-slate-500">
-              Log in to manage your UrLink card.
+              Log in to manage UrLink card.
             </p>
           </div>
 

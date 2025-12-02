@@ -7,13 +7,14 @@ generator client {
 }
 
 model User {
-  id         String    @id @default(cuid())
-  email      String    @unique
-  username   String    @unique
-  bio        String?
-  avatarUrl  String?
-  plan       Plan      @default(FREE)
-  createdAt  DateTime  @default(now())
+  id          String    @id @default(cuid())
+  email       String    @unique
+  username    String    @unique
+  displayName String?
+  bio         String?
+  avatarUrl   String?
+  plan        Plan      @default(FREE)
+  createdAt   DateTime  @default(now())
 
   links      Link[]
   posts      Post[]
