@@ -10,7 +10,6 @@ model User {
   id          String    @id @default(cuid())
   email       String    @unique
   username    String    @unique
-  displayName String?
   bio         String?
   avatarUrl   String?
   plan        Plan      @default(FREE)

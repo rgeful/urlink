@@ -18,6 +18,23 @@ export default function DashboardPage() {
         return;
       }
 
+      const { data: rows, error } = await supabase
+        .from("User")
+        .select("username")
+        .eq("id", user.id)
+        .limit(1);
+
+      if (error) {
+        console.error(error);
+      }
+
+      const profile = rows?.[0];
+
+      if (!profile || !profile.username) {
+        window.location.href = "/dashboard/onboarding";
+        return;
+      }
+
       setEmail(user.email ?? null);
       setLoading(false);
     }
@@ -43,7 +60,7 @@ export default function DashboardPage() {
 
         <div className="rounded-2xl bg-white shadow-sm border border-slate-100 p-6">
           <p className="text-sm text-slate-500">
-            Card editor coming next…
+            Card editor coming next
           </p>
         </div>
       </div>
