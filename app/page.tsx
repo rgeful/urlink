@@ -1,10 +1,9 @@
-import Image from "next/image";
-import NavBar from "../components/NavBar";
-import Hero from "../components/Hero";
-import Hero3 from "../components/Hero3";
-import Hero2 from "../components/Hero2";
-import Footer from "../components/Footer";
-import MarqueeComponent from "@/components/Marquee";
+import NavBar from "../components/landing/NavBar";
+import Hero from "../components/landing/Hero";
+import Hero3 from "../components/landing/Hero3";
+import Hero2 from "../components/landing/Hero2";
+import Footer from "../components/landing/Footer";
+import MarqueeComponent from "@/components/landing/Marquee";
 
 export default function Home() {
   return (
