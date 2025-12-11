@@ -145,169 +145,160 @@ export default function DashboardPage() {
 }
 
 
-  return (
-    <main className="min-h-screen px-4 py-6">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 md:flex-row">
-        {/* Left Editor */}
-        <section className="w-full md:w-1/2">
-          <header className="mb-4 flex items-center justify-between">
-            <div>
-              <h1 className="text-lg font-semibold">My Page</h1>
-              <p className="text-[11px] text-slate-500">
-                Logged in as {email}
-              </p>
+return (
+  <main className="min-h-screen px-6 py-8">
+    <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 md:flex-row">
+      {/* Left Editor */}
+      <section className="w-full md:w-1/2">
+        <header className="mb-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold">My Page</h1>
+            <p className="text-sm text-slate-500">Logged in as {email}</p>
+          </div>
+        </header>
+
+        {/* Page URL */}
+        <div className="mb-5">
+          <p className="mb-1 text-sm font-medium text-slate-600">
+            Your page URL
+          </p>
+          <div className="flex items-center gap-3">
+            <div className="flex-1 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-600">
+              urlink.app/<span className="font-mono">{username}</span>
             </div>
-          </header>
-
-          {/* Page URL */}
-          <div className="mb-4">
-            <p className="text-[11px] font-medium text-slate-600 mb-1">
-              Your page URL
-            </p>
-            <div className="flex items-center gap-2">
-              <div className="flex-1 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs text-slate-600">
-                urlink.app/<span className="font-mono">{username}</span>
-              </div>
-              <button
-                type="button"
-                className="rounded-full bg-black cursor-pointer px-4 py-2 text-[11px] font-semibold text-white"
-                onClick={() =>
-                  navigator.clipboard.writeText(
-                    `https://urlink.app/${username}`
-                  )
-                }
-              >
-                Copy URL
-              </button>
-            </div>
+            <button
+              type="button"
+              className="cursor-pointer rounded-full bg-black px-5 py-2 text-xs font-semibold text-white"
+              onClick={() =>
+                navigator.clipboard.writeText(`https://urlink.app/${username}`)
+              }
+            >
+              Copy URL
+            </button>
           </div>
+        </div>
 
-
-          <div className="mb-6">
-            <p className="text-[11px] font-medium text-slate-600 mb-2">
-              Profile photo
-            </p>
-            <div className="flex items-center gap-3">
-              <label className="relative h-16 w-16 cursor-pointer">
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleAvatarChange}
-                />
-                <div className="h-16 w-16 rounded-full overflow-hidden bg-slate-200 flex items-center justify-center">
-                  {avatarUrl ? (
-                    <img
-                      src={avatarUrl}
-                      alt="Avatar"
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <span className="text-xs text-slate-500">Add</span>
-                  )}
-                </div>
-                <div className="absolute -right-1 -bottom-1 h-5 w-5 rounded-full bg-black text-[10px] text-white flex items-center justify-center">
-                  +
-                </div>
-              </label>
-              <span className="text-[11px] text-slate-500">
-                JPG, PNG, or GIF. Recommended square image.
-              </span>
-            </div>
-            {uploading && (
-              <p className="mt-1 text-[10px] text-slate-400">Uploading…</p>
-            )}
-            {error && (
-              <p className="mt-1 text-[10px] text-red-500">{error}</p>
-            )}
-          </div>
-
-
-          {/* Page Name */}
-          <div className="mb-4">
-            <label className="mb-1 block text-[11px] font-medium text-slate-600">
-              Page name
-            </label>
-            <input
-              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-black"
-              value={pageName}
-              onChange={(e) => setPageName(e.target.value)}
-              placeholder="Your name or brand"
-            />
-          </div>
-
-          {/* Intro / bio */}
-          <div className="mb-4">
-            <label className="mb-1 block text-[11px] font-medium text-slate-600">
-              Bio
-            </label>
-            <textarea
-              className="h-28 w-full resize-none rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-black"
-              value={intro}
-              onChange={(e) => setIntro(e.target.value)}
-              placeholder="Tell others about yourself"
-              maxLength={500}
-            />
-            <p className="mt-1 text-[10px] text-slate-400">
-              {intro.length}/500
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={saving}
-            className="mt-2 rounded-full bg-black cursor-pointer px-6 py-2 text-xs font-semibold text-white disabled:opacity-60"
-          >
-            {saving ? "Saving..." : "Save changes"}
-          </button>
-        </section>
-
-        {/* Right Preview (might have to separate everything tbh) */}
-        <section className="w-full md:w-1/2 flex justify-center md:justify-end">
-          <div className="w-full max-w-md rounded-3xl px-6 py-8 flex items-center justify-center">
-            <div className="w-full aspect-9/16 max-w-xs rounded-4xl bg-white px-6 py-8 shadow-md overflow-y-auto">
-              <div className="flex flex-col items-center">
-                {/* avatar placeholder */}
-                <div className="h-16 w-16 rounded-full overflow-hidden bg-slate-200 mb-3">
-                  {avatarUrl ? (
-                    <img
-                      src={avatarUrl}
-                      alt="Avatar"
-                      className="h-full w-full object-cover"
-                    />
-                  ) : null}
-                </div>
-
-
-                {/* name */}
-                <p className="text-sm font-semibold mb-1">
-                  {pageName || username}
-                </p>
-
-                {/* intro / bio */}
-                {intro && (
-                  <div className="mt-1 w-full rounded-xl px-4 py-1 text-[11px] text-center text-slate-600 wrap-break-word">
-                    {intro}
-                  </div>
-
-                )}
-
-                <div className="flex justify-center mt-6">
-                  <Image
-                    src="/UrLinkLogo2.svg"
-                    alt="URLink Logo"
-                    width={80}
-                    height={20}
-                    className="opacity-60"
+        {/* Profile photo */}
+        <div className="mb-6">
+          <p className="mb-2 text-sm font-medium text-slate-600">Profile photo</p>
+          <div className="flex items-center gap-4">
+            <label className="relative h-20 w-20 cursor-pointer">
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleAvatarChange}
+              />
+              <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-slate-200">
+                {avatarUrl ? (
+                  <img
+                    src={avatarUrl}
+                    alt="Avatar"
+                    className="h-full w-full object-cover"
                   />
-                </div>
+                ) : (
+                  <span className="text-xs text-slate-500">Add</span>
+                )}
+              </div>
+              <div className="absolute -right-1 -bottom-1 flex h-6 w-6 items-center justify-center rounded-full bg-black text-[11px] text-white">
+                +
+              </div>
+            </label>
+            <span className="text-xs text-slate-500">
+              JPG, PNG, or GIF. Recommended square image.
+            </span>
+          </div>
+          {uploading && (
+            <p className="mt-1 text-[11px] text-slate-400">Uploading…</p>
+          )}
+          {error && (
+            <p className="mt-1 text-[11px] text-red-500">{error}</p>
+          )}
+        </div>
 
+        {/* Page Name */}
+        <div className="mb-4">
+          <label className="mb-1 block text-sm font-medium text-slate-600">
+            Page name
+          </label>
+          <input
+            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-base outline-none focus:border-black"
+            value={pageName}
+            onChange={(e) => setPageName(e.target.value)}
+            placeholder="Your name or brand"
+          />
+        </div>
+
+        {/* Intro / bio */}
+        <div className="mb-4">
+          <label className="mb-1 block text-sm font-medium text-slate-600">
+            Bio
+          </label>
+          <textarea
+            className="h-36 w-full resize-none rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-black"
+            value={intro}
+            onChange={(e) => setIntro(e.target.value)}
+            placeholder="Tell others about yourself"
+            maxLength={500}
+          />
+          <p className="mt-1 text-[11px] text-slate-400">
+            {intro.length}/500
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleSave}
+          disabled={saving}
+          className="mt-3 cursor-pointer rounded-full bg-black px-7 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
+        >
+          {saving ? "Saving..." : "Save changes"}
+        </button>
+      </section>
+
+      {/* Right Preview */}
+      <section className="w-full md:w-1/2 flex justify-center md:justify-end">
+        <div className="w-full max-w-sm rounded-3xl px-4 py-6 flex items-center justify-center">
+          <div className="w-full max-w-[320px] aspect-9/16 rounded-[30px] bg-white px-6 py-8 shadow-md overflow-y-auto">
+            <div className="flex flex-col items-center">
+              {/* avatar */}
+              <div className="mb-3 h-20 w-20 overflow-hidden rounded-full bg-slate-200">
+                {avatarUrl ? (
+                  <img
+                    src={avatarUrl}
+                    alt="Avatar"
+                    className="h-full w-full object-cover"
+                  />
+                ) : null}
+              </div>
+
+              {/* name */}
+              <p className="mb-1 text-base font-semibold">
+                {pageName || username}
+              </p>
+
+              {/* bio */}
+              {intro && (
+                <div className="mt-2 w-full rounded-xl px-4 py-2 text-xs text-center text-slate-600 wrap-break-word">
+                  {intro}
+                </div>
+              )}
+
+              <div className="mt-8 flex justify-center">
+                <Image
+                  src="/UrLinkLogo2.svg"
+                  alt="URLink Logo"
+                  width={90}
+                  height={24}
+                  className="opacity-60"
+                />
               </div>
             </div>
           </div>
-        </section>
-      </div>
-    </main>
-  );
+        </div>
+      </section>
+    </div>
+  </main>
+);
+
 }
