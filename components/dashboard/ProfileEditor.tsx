@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { AVAILABLE_ICONS, getIcon, IconKey } from "@/constants/icons";
+import { AVAILABLE_ICONS, getIcon,} from "@/constants/icons";
 
 interface IconLink {
   id: string;
@@ -319,7 +319,7 @@ export default function ProfileEditor({
   const sortedIconLinks = [...iconLinks].sort((a, b) => a.orderIndex - b.orderIndex);
 
   return (
-    <section className="w-full md:w-1/2">
+    <section className="w-full py-6.5 md:w-1/2">
       <header className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">My Page</h1>
@@ -329,7 +329,7 @@ export default function ProfileEditor({
 
       {/* Page URL */}
       <div className="mb-5">
-        <p className="mb-1 text-sm font-medium text-slate-600">Your page URL</p>
+        <p className="mb-1 text-sm font-medium text-slate-600">Ur Link</p>
         <div className="flex items-center gap-3">
           <div className="flex-1 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-600">
             urlink.app/<span className="font-mono">{username}</span>
@@ -386,7 +386,7 @@ export default function ProfileEditor({
       {/* Page Name */}
       <div className="mb-4">
         <label className="mb-1 block text-sm font-medium text-slate-600">
-          Page name
+          Ur name
         </label>
         <input
           className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-base outline-none focus:border-black transition"
@@ -399,7 +399,7 @@ export default function ProfileEditor({
       {/* bio */}
       <div className="mb-4">
         <label className="mb-1 block text-sm font-medium text-slate-600">
-          Bio
+          Ur Bio
         </label>
         <textarea
           className="h-36 w-full resize-none rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-black transition"

@@ -25,11 +25,11 @@ export default function MobilePreview({
   iconLinks = [],
 }: MobilePreviewProps) {
   return (
-    <div className="w-full overflow:hidden max-w-md rounded-3xl px-4 py-6 flex items-center justify-center">
-      <div className="w-full max-w-[320px] aspect-9/16 rounded-4xl bg-white px-6 py-8 shadow-md overflow-y-auto border border-slate-200">
+    <div className="w-full overflow:hidden max-w-lg rounded-4xl px-4 py-6 flex items-center justify-center">
+      <div className="w-full max-w-[400px] aspect-9/16 rounded-4xl bg-white px-8 py-10 shadow-lg overflow-y-auto border border-slate-200">
         <div className="flex flex-col items-center">
           {/* Avatar */}
-          <div className="mb-3 h-20 w-20 overflow-hidden rounded-full bg-slate-200">
+          <div className="mb-4 h-32 w-32 overflow-hidden rounded-full bg-slate-200">
             {avatarUrl ? (
               <img
                 src={avatarUrl}
@@ -40,13 +40,13 @@ export default function MobilePreview({
           </div>
 
           {/* Name */}
-          <p className="text-base font-semibold">
+          <p className="text-2xl font-semibold">
             {pageName || username}
           </p>
 
           {/* Bio */}
           {intro && (
-            <div className="w-full rounded-xl px-4 py-2 text-xs text-center text-slate-600 wrap-break-word">
+            <div className="w-full rounded-xl px-4 py-2 text-md text-center text-slate-600 wrap-break-word">
               {intro}
             </div>
           )}
@@ -63,7 +63,7 @@ export default function MobilePreview({
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-10 w-10 items-center justify-center rounded-full text-slate-800 transition hover:text-black"
+                    className="flex h-12 w-13 items-center justify-center rounded-full text-slate-800 transition hover:text-black"
                   >
                     {getIcon(link.platform)}
                   </a>
@@ -72,12 +72,12 @@ export default function MobilePreview({
           )}
 
           {/* Branding */}
-          <div className="mt-8 flex justify-center">
+          <div className="mt-10 flex justify-center">
             <Image
               src="/UrLinkLogo2.svg"
               alt="URLink Logo"
-              width={90}
-              height={24}
+              width={110}
+              height={30}
               className="opacity-80"
             />
           </div>

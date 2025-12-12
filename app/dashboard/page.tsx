@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import ProfileEditor from "@/components/dashboard/ProfileEditor";
 import MobilePreview from "@/components/dashboard/MobilePreview";
+import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 
 interface IconLink {
   id: string;
@@ -86,8 +87,10 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="min-h-screen px-6 py-8 bg-slate-50">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 md:flex-row">
+    <>
+      <DashboardNavbar userName={pageName || username} avatarUrl={avatarUrl} />
+      <main className="min-h-screen px-6 py-8 bg-slate-50 pt-24">
+        <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 md:flex-row">
 
         {userId && (
           <ProfileEditor
@@ -116,5 +119,6 @@ export default function DashboardPage() {
         </section>
       </div>
     </main>
+    </>
   );
 }
