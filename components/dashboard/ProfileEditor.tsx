@@ -47,6 +47,8 @@ export default function ProfileEditor({
   const [newIconLinkUrl, setNewIconLinkUrl] = useState<string>("");
   const [editingIconLinkId, setEditingIconLinkId] = useState<string | null>(null);
   const [editIconLinkUrl, setEditIconLinkUrl] = useState<string>("");
+  const [draggedItemId, setDraggedItemId] = useState<string | null>(null);
+  const [dragOverItemId, setDragOverItemId] = useState<string | null>(null);
 
   async function handleSave() {
     if (!username) return;
@@ -220,9 +222,101 @@ export default function ProfileEditor({
     setEditIconLinkUrl("");
   }
 
+  function handleDragStart(e: React.DragEvent, id: string) {
+    setDraggedItemId(id);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", id);
+  }
+
+  function handleDragOver(e: React.DragEvent, id: string) {
+    e.preventDefault();
+    e.stopPropagation();
+    e.dataTransfer.dropEffect = "move";
+    if (draggedItemId && draggedItemId !== id) {
+      setDragOverItemId(id);
+    }
+  }
+
+  function handleDragLeave() {
+    setDragOverItemId(null);
+  }
+
+  async function handleDrop(e: React.DragEvent, targetId: string) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (!draggedItemId || draggedItemId === targetId) {
+      setDraggedItemId(null);
+      setDragOverItemId(null);
+      return;
+    }
+
+    const sortedLinks = [...iconLinks].sort((a, b) => a.orderIndex - b.orderIndex);
+    const draggedIndex = sortedLinks.findIndex(link => link.id === draggedItemId);
+    const targetIndex = sortedLinks.findIndex(link => link.id === targetId);
+    
+    if (draggedIndex === -1 || targetIndex === -1) {
+      setDraggedItemId(null);
+      setDragOverItemId(null);
+      return;
+    }
+
+    // Swap orderIndex values
+    const draggedLink = sortedLinks[draggedIndex];
+    const targetLink = sortedLinks[targetIndex];
+    const newDraggedOrderIndex = targetLink.orderIndex;
+    const newTargetOrderIndex = draggedLink.orderIndex;
+    
+    // Update both links in the database
+    const updates = [
+      supabase
+        .from("IconLink")
+        .update({ orderIndex: newDraggedOrderIndex })
+        .eq("id", draggedLink.id),
+      supabase
+        .from("IconLink")
+        .update({ orderIndex: newTargetOrderIndex })
+        .eq("id", targetLink.id),
+    ];
+    
+    const results = await Promise.all(updates);
+    
+    // Check for errors
+    const hasError = results.some(result => result.error);
+    if (hasError) {
+      console.error("Error reordering icon links");
+      alert("Failed to reorder social links.");
+      setDraggedItemId(null);
+      setDragOverItemId(null);
+      return;
+    }
+    
+    // Update local state
+    const updatedLinks = iconLinks.map(link => {
+      if (link.id === draggedLink.id) {
+        return { ...link, orderIndex: newDraggedOrderIndex };
+      }
+      if (link.id === targetLink.id) {
+        return { ...link, orderIndex: newTargetOrderIndex };
+      }
+      return link;
+    });
+    
+    setIconLinks(updatedLinks);
+    setDraggedItemId(null);
+    setDragOverItemId(null);
+  }
+
+  function handleDragEnd() {
+    setDraggedItemId(null);
+    setDragOverItemId(null);
+  }
+
   const availablePlatforms = AVAILABLE_ICONS.filter(
     icon => !iconLinks.some(link => link.platform === icon.value)
   );
+  
+  const sortedIconLinks = [...iconLinks].sort((a, b) => a.orderIndex - b.orderIndex);
 
   return (
     <section className="w-full md:w-1/2">
@@ -327,13 +421,40 @@ export default function ProfileEditor({
         
         {/* Existing Icon Links */}
         <div className="mb-3 space-y-2">
-          {iconLinks
-            .sort((a, b) => a.orderIndex - b.orderIndex)
-            .map((link) => (
+          {sortedIconLinks.map((link) => {
+            const isDragging = draggedItemId === link.id;
+            const isDragOver = dragOverItemId === link.id;
+            const isEditing = editingIconLinkId === link.id;
+            
+            return (
               <div
                 key={link.id}
-                className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2"
+                draggable={!isEditing}
+                onDragStart={(e) => !isEditing && handleDragStart(e, link.id)}
+                onDragOver={(e) => !isEditing && handleDragOver(e, link.id)}
+                onDragLeave={handleDragLeave}
+                onDrop={(e) => !isEditing && handleDrop(e, link.id)}
+                onDragEnd={handleDragEnd}
+                className={`flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 transition ${
+                  isDragging ? "opacity-50 cursor-grabbing" : isEditing ? "cursor-default" : "cursor-grab"
+                } ${
+                  isDragOver ? "border-black border-2" : ""
+                }`}
               >
+                {/* Drag Handle */}
+                {!isEditing && (
+                  <div className="flex cursor-grab active:cursor-grabbing text-slate-400 hover:text-slate-600 touch-none select-none">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="h-5 w-4"
+                    >
+                      <path d="M9 5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM18 5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                    </svg>
+                  </div>
+                )}
+                
                 <div className="shrink-0 text-slate-600">
                   {getIcon(link.platform)}
                 </div>
@@ -391,7 +512,8 @@ export default function ProfileEditor({
                   </>
                 )}
               </div>
-            ))}
+            );
+          })}
         </div>
 
         {/* Add Icon Link Button */}

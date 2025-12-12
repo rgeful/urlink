@@ -40,7 +40,7 @@ export default function MobilePreview({
           </div>
 
           {/* Name */}
-          <p className="mb-1 text-base font-semibold">
+          <p className="text-base font-semibold">
             {pageName || username}
           </p>
 
@@ -53,7 +53,7 @@ export default function MobilePreview({
 
           {/* Social Links */}
           {iconLinks.length > 0 && (
-            <div className="mt-1 flex flex-wrap justify-center gap-1">
+            <div className="flex flex-wrap justify-center">
               {iconLinks
                 .filter(link => link.isActive)
                 .sort((a, b) => a.orderIndex - b.orderIndex)
@@ -78,7 +78,7 @@ export default function MobilePreview({
               alt="URLink Logo"
               width={90}
               height={24}
-              className="opacity-60"
+              className="opacity-80"
             />
           </div>
         </div>
