@@ -2,17 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import ProfileEditor from "@/components/dashboard/ProfileEditor";
+import ProfileSettings from "@/components/dashboard/ProfileSettings";
+import SocialLinks from "@/components/dashboard/SocialLinks";
+import SaveButton from "@/components/dashboard/SaveButton";
 import MobilePreview from "@/components/dashboard/MobilePreview";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
-
-interface IconLink {
-  id: string;
-  platform: string;
-  url: string;
-  orderIndex: number;
-  isActive: boolean;
-}
+import { IconLink } from "@/components/dashboard/SocialLinks";
 
 export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
@@ -28,6 +23,7 @@ export default function DashboardPage() {
   const [intro, setIntro] = useState("");
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [iconLinks, setIconLinks] = useState<IconLink[]>([]);
+  const [cardColor, setCardColor] = useState("#ffffff");
 
   useEffect(() => {
     async function load() {
@@ -43,7 +39,7 @@ export default function DashboardPage() {
       // Fetch User Profile
       const { data: profile, error } = await supabase
         .from("User")
-        .select("username,bio,avatarUrl")
+        .select("username,bio,avatarUrl,backgroundColor")
         .eq("id", user.id)
         .maybeSingle();
 
@@ -71,6 +67,7 @@ export default function DashboardPage() {
       setPageName(profile.username);
       setIntro(profile.bio ?? "");
       setAvatarUrl(profile.avatarUrl ?? null);
+      setCardColor(profile.backgroundColor ?? "#ffffff");
       setIconLinks(icons || []);
 
       setLoading(false);
@@ -90,8 +87,8 @@ export default function DashboardPage() {
   return (
     <>
       <DashboardNavbar userName={pageName || username} avatarUrl={avatarUrl} />
-      <main className="min-h-screen flex">
-        <div className="w-full md:w-1/2 px-6 py-8 pt-24">
+      <main className="min-h-screen flex overflow-x-hidden">
+        <div className="w-full md:w-1/2 px-6 py-8 pt-24 max-w-full overflow-x-hidden">
           {/* Preview Design Button - Mobile Only */}
           <button
             onClick={() => setShowPreview(true)}
@@ -101,19 +98,29 @@ export default function DashboardPage() {
           </button>
 
           {userId && (
-            <ProfileEditor
-              userId={userId}
-              email={email}
-              username={username}
-              pageName={pageName}
-              setPageName={setPageName}
-              intro={intro}
-              setIntro={setIntro}
-              avatarUrl={avatarUrl}
-              setAvatarUrl={setAvatarUrl}
-              iconLinks={iconLinks} 
-              setIconLinks={setIconLinks}
-            />
+            <>
+              <ProfileSettings
+                userId={userId}
+                email={email}
+                username={username}
+                pageName={pageName}
+                setPageName={setPageName}
+                intro={intro}
+                setIntro={setIntro}
+                avatarUrl={avatarUrl}
+                setAvatarUrl={setAvatarUrl}
+                cardColor={cardColor}
+                setCardColor={setCardColor}
+              />
+              <SocialLinks
+                userId={userId}
+                iconLinks={iconLinks}
+                setIconLinks={setIconLinks}
+              />
+              <div className="mt-6 pb-8">
+                <SaveButton username={username} intro={intro} cardColor={cardColor} />
+              </div>
+            </>
           )}
         </div>
 
@@ -125,6 +132,7 @@ export default function DashboardPage() {
             username={username}
             intro={intro}
             iconLinks={iconLinks}
+            cardColor={cardColor}
           />
         </section>
 
@@ -157,6 +165,7 @@ export default function DashboardPage() {
                 username={username}
                 intro={intro}
                 iconLinks={iconLinks}
+                cardColor={cardColor}
               />
             </div>
           </div>

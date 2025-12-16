@@ -14,16 +14,16 @@ import { MdEmail } from "react-icons/md";
 export type IconKey = "github" | "twitter" | "tiktok" | "telegram" | "instagram" | "youtube" | "whatsapp" | "linkedin" | "email" | "website";
 
 export const ICON_MAP: Record<IconKey, React.ReactNode> = {
-  github: <FaGithub size={36} />,
-  twitter: <FaTwitter size={36} />,
-  tiktok: <FaTiktok size={36} />,
-  telegram: <FaTelegram size={36} />,
-  instagram: <FaInstagram size={36} />,
-  youtube: <FaYoutube size={36} />,
-  whatsapp: <FaWhatsapp size={36} />,
-  linkedin: <FaLinkedin size={36} />,
-  email: <MdEmail size={36} />,
-  website: <FaGlobe size={36} />,
+  github: <FaGithub size={24} className="text-white" />,
+  twitter: <FaTwitter size={24} className="text-white" />,
+  tiktok: <FaTiktok size={24} className="text-white" />,
+  telegram: <FaTelegram size={24} className="text-white" />,
+  instagram: <FaInstagram size={24} className="text-white" />,
+  youtube: <FaYoutube size={24} className="text-white" />,
+  whatsapp: <FaWhatsapp size={24} className="text-white" />,
+  linkedin: <FaLinkedin size={24} className="text-white" />,
+  email: <MdEmail size={24} className="text-white" />,
+  website: <FaGlobe size={24} className="text-white" />,
 };
 
 export const getIcon = (key: string) => {
