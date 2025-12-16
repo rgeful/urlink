@@ -25,11 +25,11 @@ export default function MobilePreview({
   iconLinks = [],
 }: MobilePreviewProps) {
   return (
-    <div className="w-full overflow:hidden max-w-lg rounded-4xl px-4 py-6 flex items-center justify-center">
-      <div className="w-full max-w-[400px] aspect-9/16 rounded-4xl bg-white px-8 py-10 shadow-lg overflow-y-auto border border-slate-200">
+    <div className="w-full overflow-hidden max-w-lg rounded-4xl px-4 py-6 flex items-center justify-center">
+      <div className="w-full max-w-[400px] aspect-9/16 rounded-4xl bg-white px-8 py-10 overflow-y-auto border border-slate-200">
         <div className="flex flex-col items-center">
           {/* Avatar */}
-          <div className="mb-4 h-32 w-32 overflow-hidden rounded-full bg-slate-200">
+          <div className="mb-4 h-28 w-28 overflow-hidden rounded-full bg-slate-200">
             {avatarUrl ? (
               <img
                 src={avatarUrl}
@@ -40,7 +40,7 @@ export default function MobilePreview({
           </div>
 
           {/* Name */}
-          <p className="text-2xl font-semibold">
+          <p className="w-full text-center text-2xl font-semibold px-4 py-2 wrap-break-word">
             {pageName || username}
           </p>
 

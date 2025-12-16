@@ -16,6 +16,7 @@ interface IconLink {
 
 export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
+  const [showPreview, setShowPreview] = useState(false);
 
   // User Auth Data
   const [userId, setUserId] = useState<string | null>(null);
@@ -89,26 +90,35 @@ export default function DashboardPage() {
   return (
     <>
       <DashboardNavbar userName={pageName || username} avatarUrl={avatarUrl} />
-      <main className="min-h-screen px-6 py-8 bg-slate-50 pt-24">
-        <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 md:flex-row">
+      <main className="min-h-screen flex">
+        <div className="w-full md:w-1/2 px-6 py-8 pt-24">
+          {/* Preview Design Button - Mobile Only */}
+          <button
+            onClick={() => setShowPreview(true)}
+            className="md:hidden fixed bottom-6 right-6 z-40 bg-black text-white px-6 py-3 rounded-full text-sm font-semibold shadow-lg hover:bg-slate-800 transition"
+          >
+            Preview Design
+          </button>
 
-        {userId && (
-          <ProfileEditor
-            userId={userId}
-            email={email}
-            username={username}
-            pageName={pageName}
-            setPageName={setPageName}
-            intro={intro}
-            setIntro={setIntro}
-            avatarUrl={avatarUrl}
-            setAvatarUrl={setAvatarUrl}
-            iconLinks={iconLinks} 
-            setIconLinks={setIconLinks}
-          />
-        )}
+          {userId && (
+            <ProfileEditor
+              userId={userId}
+              email={email}
+              username={username}
+              pageName={pageName}
+              setPageName={setPageName}
+              intro={intro}
+              setIntro={setIntro}
+              avatarUrl={avatarUrl}
+              setAvatarUrl={setAvatarUrl}
+              iconLinks={iconLinks} 
+              setIconLinks={setIconLinks}
+            />
+          )}
+        </div>
 
-        <section className="w-full md:w-1/2 flex justify-center md:justify-end sticky top-8 h-fit">
+        {/* Desktop Preview - Fixed Right Side */}
+        <section className="hidden md:flex fixed top-16 right-0 w-1/2 h-[calc(100vh-4rem)] bg-slate-50 items-center justify-center">
           <MobilePreview
             avatarUrl={avatarUrl}
             pageName={pageName}
@@ -117,8 +127,41 @@ export default function DashboardPage() {
             iconLinks={iconLinks}
           />
         </section>
-      </div>
-    </main>
+
+        {/* Mobile Preview Modal - Fullscreen */}
+        {showPreview && (
+          <div className="md:hidden fixed inset-0 z-50 bg-white overflow-y-auto">
+            <button
+              onClick={() => setShowPreview(false)}
+              className="fixed top-4 right-4 z-10 bg-black/80 text-white rounded-full p-2 shadow-lg hover:bg-black transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+            <div className="min-h-screen flex items-center justify-center">
+              <MobilePreview
+                avatarUrl={avatarUrl}
+                pageName={pageName}
+                username={username}
+                intro={intro}
+                iconLinks={iconLinks}
+              />
+            </div>
+          </div>
+        )}
+      </main>
     </>
   );
 }

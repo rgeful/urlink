@@ -319,7 +319,7 @@ export default function ProfileEditor({
   const sortedIconLinks = [...iconLinks].sort((a, b) => a.orderIndex - b.orderIndex);
 
   return (
-    <section className="w-full py-6.5 md:w-1/2">
+    <section className="w-full">
       <header className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">My Page</h1>
@@ -331,7 +331,7 @@ export default function ProfileEditor({
       <div className="mb-5">
         <p className="mb-1 text-sm font-medium text-slate-600">Ur Link</p>
         <div className="flex items-center gap-3">
-          <div className="flex-1 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-600">
+          <div className="flex-1 rounded-full border border-slate-400 bg-white px-4 py-2 text-sm text-slate-600">
             urlink.app/<span className="font-mono">{username}</span>
           </div>
           <button
@@ -358,7 +358,7 @@ export default function ProfileEditor({
               onChange={handleAvatarChange}
               disabled={uploading}
             />
-            <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-slate-200 border border-slate-300">
+            <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-slate-200 border border-slate-500">
               {avatarUrl ? (
                 <img
                   src={avatarUrl}
@@ -389,10 +389,11 @@ export default function ProfileEditor({
           Ur name
         </label>
         <input
-          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-base outline-none focus:border-black transition"
+          className="w-full rounded-2xl border border-slate-400 bg-white px-4 py-2.5 text-base outline-none focus:border-black transition"
           value={pageName}
           onChange={(e) => setPageName(e.target.value)}
           placeholder="Your name or brand"
+          maxLength={80}
         />
       </div>
 
@@ -402,14 +403,14 @@ export default function ProfileEditor({
           Ur Bio
         </label>
         <textarea
-          className="h-36 w-full resize-none rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-black transition"
+          className="h-36 w-full resize-none rounded-2xl border border-slate-400 bg-white px-4 py-2.5 text-sm outline-none focus:border-black transition"
           value={intro}
           onChange={(e) => setIntro(e.target.value)}
           placeholder="Tell others about yourself"
-          maxLength={500}
+          maxLength={200}
         />
         <p className="mt-1 text-[11px] text-slate-400 text-right">
-          {intro.length}/500
+          {intro.length}/200
         </p>
       </div>
 
@@ -435,7 +436,7 @@ export default function ProfileEditor({
                 onDragLeave={handleDragLeave}
                 onDrop={(e) => !isEditing && handleDrop(e, link.id)}
                 onDragEnd={handleDragEnd}
-                className={`flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 transition ${
+                className={`flex items-center gap-2 rounded-xl border border-slate-400 bg-white px-3 py-2 transition ${
                   isDragging ? "opacity-50 cursor-grabbing" : isEditing ? "cursor-default" : "cursor-grab"
                 } ${
                   isDragOver ? "border-black border-2" : ""
@@ -465,7 +466,7 @@ export default function ProfileEditor({
                       value={editIconLinkUrl}
                       onChange={(e) => setEditIconLinkUrl(e.target.value)}
                       placeholder="Enter URL"
-                      className="flex-1 rounded-lg border border-slate-200 px-2 py-1 text-sm outline-none focus:border-black"
+                      className="flex-1 rounded-lg border border-slate-400 px-2 py-1 text-sm outline-none focus:border-black"
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           handleUpdateIconLink(link.id, editIconLinkUrl);
@@ -485,7 +486,7 @@ export default function ProfileEditor({
                     <button
                       type="button"
                       onClick={cancelEditingIconLink}
-                      className="rounded-lg border border-slate-200 px-3 py-1 text-xs text-slate-600 hover:bg-slate-50"
+                      className="rounded-lg border border-slate-400 px-3 py-1 text-xs text-slate-600 hover:bg-slate-50"
                     >
                       Cancel
                     </button>
@@ -526,11 +527,11 @@ export default function ProfileEditor({
             + Add Social Link
           </button>
         ) : (
-          <div className="rounded-xl border border-slate-200 bg-white p-3 space-y-2">
+          <div className="rounded-xl border border-slate-400 bg-white p-3 space-y-2">
             <select
               value={newIconLinkPlatform}
               onChange={(e) => setNewIconLinkPlatform(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-black"
+              className="w-full rounded-lg border border-slate-400 bg-white px-3 py-2 text-sm outline-none focus:border-black"
             >
               <option value="">Select platform</option>
               {availablePlatforms.map((icon) => (
@@ -544,7 +545,7 @@ export default function ProfileEditor({
               value={newIconLinkUrl}
               onChange={(e) => setNewIconLinkUrl(e.target.value)}
               placeholder="Enter URL (e.g., https://github.com/username)"
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-black"
+              className="w-full rounded-lg border border-slate-400 bg-white px-3 py-2 text-sm outline-none focus:border-black"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   handleAddIconLink();
