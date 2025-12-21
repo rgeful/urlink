@@ -16,6 +16,8 @@ interface ProfileSettingsProps {
   setAvatarUrl: (val: string | null) => void;
   cardColor: string;
   setCardColor: (val: string) => void;
+  textColor: string;
+  setTextColor: (val: string) => void;
 }
 
 export default function ProfileSettings({
@@ -30,11 +32,14 @@ export default function ProfileSettings({
   setAvatarUrl,
   cardColor,
   setCardColor,
+  textColor,
+  setTextColor,
 }: ProfileSettingsProps) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(true);
   const colorInputRef = useRef<HTMLInputElement>(null);
+  const textColorInputRef = useRef<HTMLInputElement>(null);
 
   async function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -235,6 +240,54 @@ export default function ProfileSettings({
                 key={color}
                 type="button"
                 onClick={() => setCardColor(color)}
+                className="h-10 w-10 flex-shrink-0 rounded-full border-2 border-slate-300 transition-all hover:scale-110"
+                style={{ backgroundColor: color }}
+                aria-label={`Select color ${color}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Text Color */}
+      <div className="mb-4">
+        <label className="mb-1 block text-sm font-medium text-slate-600">
+          Text Color
+        </label>
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="relative shrink-0">
+            <input
+              ref={textColorInputRef}
+              type="color"
+              value={textColor}
+              onChange={(e) => setTextColor(e.target.value)}
+              className="absolute inset-0 w-10 h-10 opacity-0 cursor-pointer z-10"
+            />
+            <div
+              className="h-10 w-10 rounded-full border-2 border-slate-300 flex items-center justify-center transition-all hover:scale-110 hover:border-black pointer-events-none"
+              style={{ backgroundColor: textColor }}
+              aria-label="Open color picker"
+            >
+              <RiPaintFill className="text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" size={20} />
+            </div>
+          </div>
+          <div className="flex items-center gap-2 flex-wrap min-w-0">
+            {[
+              "#ffffff", // White
+              "#000000", // Black
+              "#ef4444", // Red
+              "#f97316", // Orange
+              "#eab308", // Yellow
+              "#22c55e", // Green
+              "#3b82f6", // Blue
+              "#a855f7", // Purple
+              "#ec4899", // Pink
+              "#6b7280", // Gray
+            ].map((color) => (
+              <button
+                key={color}
+                type="button"
+                onClick={() => setTextColor(color)}
                 className="h-10 w-10 flex-shrink-0 rounded-full border-2 border-slate-300 transition-all hover:scale-110"
                 style={{ backgroundColor: color }}
                 aria-label={`Select color ${color}`}

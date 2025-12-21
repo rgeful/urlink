@@ -24,6 +24,7 @@ export default function DashboardPage() {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [iconLinks, setIconLinks] = useState<IconLink[]>([]);
   const [cardColor, setCardColor] = useState("#ffffff");
+  const [textColor, setTextColor] = useState("#000000");
 
   useEffect(() => {
     async function load() {
@@ -39,7 +40,7 @@ export default function DashboardPage() {
       // Fetch User Profile
       const { data: profile, error } = await supabase
         .from("User")
-        .select("username,bio,avatarUrl,backgroundColor")
+        .select("username,bio,avatarUrl,backgroundColor,textColor")
         .eq("id", user.id)
         .maybeSingle();
 
@@ -67,7 +68,8 @@ export default function DashboardPage() {
       setPageName(profile.username);
       setIntro(profile.bio ?? "");
       setAvatarUrl(profile.avatarUrl ?? null);
-      setCardColor(profile.backgroundColor ?? "#ffffff");
+      setCardColor(profile.backgroundColor ? (profile.backgroundColor.startsWith("#") ? profile.backgroundColor : `#${profile.backgroundColor}`) : "#ffffff");
+      setTextColor(profile.textColor ? (profile.textColor.startsWith("#") ? profile.textColor : `#${profile.textColor}`) : "#000000");
       setIconLinks(icons || []);
 
       setLoading(false);
@@ -111,6 +113,8 @@ export default function DashboardPage() {
                 setAvatarUrl={setAvatarUrl}
                 cardColor={cardColor}
                 setCardColor={setCardColor}
+                textColor={textColor}
+                setTextColor={setTextColor}
               />
               <SocialLinks
                 userId={userId}
@@ -118,7 +122,7 @@ export default function DashboardPage() {
                 setIconLinks={setIconLinks}
               />
               <div className="mt-6 pb-8">
-                <SaveButton username={username} intro={intro} cardColor={cardColor} />
+                <SaveButton username={username} intro={intro} cardColor={cardColor} textColor={textColor} />
               </div>
             </>
           )}
@@ -133,6 +137,7 @@ export default function DashboardPage() {
             intro={intro}
             iconLinks={iconLinks}
             cardColor={cardColor}
+            textColor={textColor}
           />
         </section>
 
@@ -166,6 +171,7 @@ export default function DashboardPage() {
                 intro={intro}
                 iconLinks={iconLinks}
                 cardColor={cardColor}
+                textColor={textColor}
               />
             </div>
           </div>

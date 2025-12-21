@@ -9,6 +9,7 @@ interface MobilePreviewProps {
   intro: string;
   iconLinks?: IconLink[];
   cardColor?: string;
+  textColor?: string;
 }
 
 export default function MobilePreview({
@@ -18,6 +19,7 @@ export default function MobilePreview({
   intro,
   iconLinks = [],
   cardColor = "#ffffff",
+  textColor = "#000000",
 }: MobilePreviewProps) {
   return (
     <div className="w-full overflow-hidden max-w-lg rounded-4xl px-4 py-6 flex items-center justify-center">
@@ -38,13 +40,19 @@ export default function MobilePreview({
           </div>
 
           {/* Name */}
-          <p className="w-full text-center text-2xl font-semibold px-4 wrap-break-word">
+          <p 
+            className="w-full text-center text-2xl font-semibold px-4 wrap-break-word"
+            style={{ color: textColor }}
+          >
             {pageName || username}
           </p>
 
           {/* Bio */}
           {intro && (
-            <div className="w-full rounded-xl px-4 py-2 text-md text-center text-black wrap-break-word">
+            <div 
+              className="w-full rounded-xl px-4 py-2 text-md text-center wrap-break-word"
+              style={{ color: textColor }}
+            >
               {intro}
             </div>
           )}
@@ -68,17 +76,6 @@ export default function MobilePreview({
                 ))}
             </div>
           )}
-
-          {/* Branding */}
-          <div className="mt-10 flex justify-center">
-            <Image
-              src="/UrLinkLogo2.svg"
-              alt="URLink Logo"
-              width={110}
-              height={30}
-              className="opacity-80"
-            />
-          </div>
         </div>
       </div>
     </div>

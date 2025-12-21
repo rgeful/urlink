@@ -23,6 +23,7 @@ export default function SocialLinks({
   iconLinks = [],
   setIconLinks,
 }: SocialLinksProps) {
+  const [isExpanded, setIsExpanded] = useState(true);
   const [showAddIconLink, setShowAddIconLink] = useState(false);
   const [newIconLinkPlatform, setNewIconLinkPlatform] = useState<string>("");
   const [newIconLinkUrl, setNewIconLinkUrl] = useState<string>("");
@@ -30,7 +31,6 @@ export default function SocialLinks({
   const [editIconLinkUrl, setEditIconLinkUrl] = useState<string>("");
   const [draggedItemId, setDraggedItemId] = useState<string | null>(null);
   const [dragOverItemId, setDragOverItemId] = useState<string | null>(null);
-  const [isExpanded, setIsExpanded] = useState(true);
 
   async function handleAddIconLink() {
     if (!newIconLinkPlatform || !newIconLinkUrl.trim()) {
@@ -234,11 +234,11 @@ export default function SocialLinks({
   const sortedIconLinks = [...iconLinks].sort((a, b) => a.orderIndex - b.orderIndex);
 
   return (
-    <div className="mb-4 rounded-xl border border-slate-200 bg-white p-6">
-      <div className="mb-2 flex items-center justify-between">
-        <label className="block text-sm font-medium text-slate-600">
-          Social Links
-        </label>
+    <div className="mb-6 rounded-xl border border-slate-200 bg-white p-6">
+      <header className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-xl font-semibold">Social Links</h1>
+        </div>
         <button
           type="button"
           onClick={() => setIsExpanded(!isExpanded)}
@@ -256,11 +256,10 @@ export default function SocialLinks({
             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
           </svg>
         </button>
-      </div>
-      
+      </header>
+
       {isExpanded && (
         <>
-      
       {/* Existing Icon Links */}
       <div className="mb-3 space-y-2">
         {sortedIconLinks.map((link) => {

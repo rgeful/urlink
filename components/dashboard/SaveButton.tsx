@@ -7,20 +7,26 @@ interface SaveButtonProps {
   username: string | null;
   intro: string;
   cardColor: string;
+  textColor: string;
 }
 
-export default function SaveButton({ username, intro, cardColor }: SaveButtonProps) {
+export default function SaveButton({ username, intro, cardColor, textColor }: SaveButtonProps) {
   const [saving, setSaving] = useState(false);
 
   async function handleSave() {
     if (!username) return;
     setSaving(true);
 
+    // Remove # from colors for database storage (if present)
+    const backgroundColor = cardColor.startsWith("#") ? cardColor.slice(1) : cardColor;
+    const textColorValue = textColor.startsWith("#") ? textColor.slice(1) : textColor;
+
     const { error } = await supabase
       .from("User")
       .update({
         bio: intro.trim(),
-        backgroundColor: cardColor,
+        backgroundColor: backgroundColor,
+        textColor: textColorValue,
       })
       .eq("username", username);
 
