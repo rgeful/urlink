@@ -40,7 +40,7 @@ export default function DashboardPage() {
       // Fetch User Profile
       const { data: profile, error } = await supabase
         .from("User")
-        .select("username,bio,avatarUrl,backgroundColor,textColor")
+        .select("username,displayName,bio,avatarUrl,backgroundColor,textColor")
         .eq("id", user.id)
         .maybeSingle();
 
@@ -65,7 +65,7 @@ export default function DashboardPage() {
       setUsername(profile.username);
       
       // Initialize shared state
-      setPageName(profile.username);
+      setPageName(profile.displayName ?? "");
       setIntro(profile.bio ?? "");
       setAvatarUrl(profile.avatarUrl ?? null);
       setCardColor(profile.backgroundColor ? (profile.backgroundColor.startsWith("#") ? profile.backgroundColor : `#${profile.backgroundColor}`) : "#ffffff");
@@ -88,7 +88,7 @@ export default function DashboardPage() {
 
   return (
     <>
-      <DashboardNavbar userName={pageName || username} avatarUrl={avatarUrl} />
+      <DashboardNavbar userName={username} avatarUrl={avatarUrl} />
       <main className="min-h-screen flex overflow-x-hidden">
         <div className="w-full md:w-1/2 px-6 py-8 pt-24 max-w-full overflow-x-hidden">
           {/* Preview Design Button - Mobile Only */}
@@ -122,7 +122,7 @@ export default function DashboardPage() {
                 setIconLinks={setIconLinks}
               />
               <div className="mt-6 pb-8">
-                <SaveButton username={username} intro={intro} cardColor={cardColor} textColor={textColor} />
+                <SaveButton username={username} pageName={pageName} intro={intro} cardColor={cardColor} textColor={textColor} />
               </div>
             </>
           )}

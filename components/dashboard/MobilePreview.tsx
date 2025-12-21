@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { getIcon } from "@/constants/icons";
 import { IconLink } from "./SocialLinks";
 
@@ -44,7 +43,7 @@ export default function MobilePreview({
             className="w-full text-center text-2xl font-semibold px-4 wrap-break-word"
             style={{ color: textColor }}
           >
-            {pageName || username}
+            {pageName || username || ""}
           </p>
 
           {/* Bio */}

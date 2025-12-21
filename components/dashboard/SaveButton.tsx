@@ -5,12 +5,13 @@ import { supabase } from "@/lib/supabaseClient";
 
 interface SaveButtonProps {
   username: string | null;
+  pageName: string;
   intro: string;
   cardColor: string;
   textColor: string;
 }
 
-export default function SaveButton({ username, intro, cardColor, textColor }: SaveButtonProps) {
+export default function SaveButton({ username, pageName, intro, cardColor, textColor }: SaveButtonProps) {
   const [saving, setSaving] = useState(false);
 
   async function handleSave() {
@@ -24,6 +25,7 @@ export default function SaveButton({ username, intro, cardColor, textColor }: Sa
     const { error } = await supabase
       .from("User")
       .update({
+        displayName: pageName.trim() || null,
         bio: intro.trim(),
         backgroundColor: backgroundColor,
         textColor: textColorValue,
