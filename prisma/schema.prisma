@@ -21,6 +21,7 @@ model User {
   avatarUrl   String?
 
   backgroundColor String @default("#ffffff")
+  textColor       String @default("000000")
 
   plan      Plan     @default(FREE)
   createdAt DateTime @default(now())
