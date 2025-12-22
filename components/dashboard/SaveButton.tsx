@@ -18,7 +18,6 @@ export default function SaveButton({ username, pageName, intro, cardColor, textC
     if (!username) return;
     setSaving(true);
 
-    // Remove # from colors for database storage (if present)
     const backgroundColor = cardColor.startsWith("#") ? cardColor.slice(1) : cardColor;
     const textColorValue = textColor.startsWith("#") ? textColor.slice(1) : textColor;
 

@@ -22,6 +22,12 @@ export default function OnboardingPage() {
         return;
       }
 
+      if (!user.email) {
+        setError("No email found for this account.");
+        setCheckingUser(false);
+        return;
+      }
+
       setCheckingUser(false);
     }
 
@@ -43,7 +49,21 @@ export default function OnboardingPage() {
       return;
     }
 
+    if (!user.email) {
+      setError("No email found for this account.");
+      setLoading(false);
+      return;
+    }
+
     const cleanUsername = username.trim().toLowerCase();
+
+    if (!/^[a-z0-9_]{3,20}$/.test(cleanUsername)) {
+      setError(
+        "Username must be 3–20 characters: lowercase letters, numbers, underscores."
+      );
+      setLoading(false);
+      return;
+    }
 
     const { error: upsertError } = await supabase
       .from("User")
@@ -59,7 +79,14 @@ export default function OnboardingPage() {
     setLoading(false);
 
     if (upsertError) {
-      setError(upsertError.message);
+      console.error(upsertError);
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((upsertError as any).code === "23505") {
+        setError("That username is already taken.");
+      } else {
+        setError(upsertError.message);
+      }
       return;
     }
 
@@ -90,6 +117,7 @@ export default function OnboardingPage() {
           className="w-24 h-auto md:w-36"
         />
       </Link>
+
       <section className="w-full md:w-1/2 flex items-center justify-center px-6 py-10">
         <div className="w-full max-w-md">
           <div className="mb-8">
@@ -100,15 +128,12 @@ export default function OnboardingPage() {
           </div>
 
           <form className="space-y-4" onSubmit={handleSubmit}>
-
             <div className="space-y-2">
               <label className="text-xs font-medium text-slate-700">
                 Username
               </label>
               <div className="flex items-center rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
-                <span className="text-xs text-slate-500 mr-1">
-                  urlink.app/
-                </span>
+                <span className="text-xs text-slate-500 mr-1">urlink.app/</span>
                 <input
                   className="flex-1 bg-transparent text-sm outline-none"
                   value={username}
@@ -134,8 +159,7 @@ export default function OnboardingPage() {
         </div>
       </section>
 
-      <section className="relative hidden md:flex items-center justify-center bg-[#d6a02f]">
-      </section>
+      <section className="relative hidden md:flex items-center justify-center bg-[#d6a02f]"></section>
     </main>
   );
 }
