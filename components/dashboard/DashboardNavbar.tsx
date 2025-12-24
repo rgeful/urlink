@@ -27,9 +27,9 @@ export default function DashboardNavbar({
 
         <div className="flex items-center gap-3">
           {userName && (
-            <span className="text-md font-medium text-slate-700">
+            <Link href="/dashboard/settings" className="text-md font-medium text-slate-700 hover:text-slate-900 transition-colors">
               {userName}
-            </span>
+            </Link>
           )}
           <div className="h-10 w-10 overflow-hidden rounded-full bg-slate-200 border border-slate-300">
             {avatarUrl ? (

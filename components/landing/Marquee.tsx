@@ -33,7 +33,7 @@ const MarqueeComponent = () => {
           key={index}
             className={`
             inline-block shadow-sm
-            text-xl px-8 py-4 rounded-full mr-6
+            text-2xl px-12 py-10 rounded-full mr-6
             md:text-3xl md:px-20 md:py-10 md:mr-10
             font-semibold text-white
             bg-linear-to-r ${gradients[index % gradients.length]}
