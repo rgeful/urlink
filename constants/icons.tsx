@@ -6,12 +6,13 @@ import {
   FaInstagram,
   FaYoutube,
   FaWhatsapp, 
-  FaLinkedin, 
+  FaLinkedin,
+  FaSnapchat, 
   FaGlobe 
 } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
-export type IconKey = "github" | "twitter" | "tiktok" | "telegram" | "instagram" | "youtube" | "whatsapp" | "linkedin" | "email" | "website";
+export type IconKey = "github" | "twitter" | "tiktok" | "telegram" | "instagram" | "youtube" | "whatsapp" | "linkedin" | "snapchat" | "email" | "website";
 
 export const ICON_MAP: Record<IconKey, React.ReactNode> = {
   github: <FaGithub size={24} className="text-white" />,
@@ -22,6 +23,7 @@ export const ICON_MAP: Record<IconKey, React.ReactNode> = {
   youtube: <FaYoutube size={24} className="text-white" />,
   whatsapp: <FaWhatsapp size={24} className="text-white" />,
   linkedin: <FaLinkedin size={24} className="text-white" />,
+  snapchat: <FaSnapchat size={24} className="text-white" />,
   email: <MdEmail size={24} className="text-white" />,
   website: <FaGlobe size={24} className="text-white" />,
 };
@@ -39,6 +41,7 @@ export const AVAILABLE_ICONS = [
   { label: "YouTube", value: "youtube" },
   { label: "WhatsApp", value: "whatsapp" },
   { label: "LinkedIn", value: "linkedin" },
+  { label: "Snapchat", value: "snapchat" },
   { label: "Email", value: "email" },
   { label: "Website", value: "website" },
 ];

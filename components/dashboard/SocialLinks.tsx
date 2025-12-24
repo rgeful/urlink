@@ -238,6 +238,7 @@ export default function SocialLinks({
       <header className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-xl font-semibold">Social Links</h1>
+          <p className="text-sm text-slate-500">Add Icon Links</p>
         </div>
         <button
           type="button"

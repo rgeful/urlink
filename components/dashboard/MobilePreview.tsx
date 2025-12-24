@@ -1,5 +1,6 @@
 import { getIcon } from "@/constants/icons";
 import { IconLink } from "./SocialLinks";
+import { Link } from "./CustomLinks";
 
 interface MobilePreviewProps {
   avatarUrl: string | null;
@@ -7,6 +8,7 @@ interface MobilePreviewProps {
   username: string | null;
   intro: string;
   iconLinks?: IconLink[];
+  links?: Link[];
   cardColor?: string;
   textColor?: string;
 }
@@ -17,6 +19,7 @@ export default function MobilePreview({
   username,
   intro,
   iconLinks = [],
+  links = [],
   cardColor = "#ffffff",
   textColor = "#000000",
 }: MobilePreviewProps) {
@@ -58,7 +61,7 @@ export default function MobilePreview({
 
           {/* Social Links */}
           {iconLinks.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-3 mb-6">
               {iconLinks
                 .filter(link => link.isActive)
                 .sort((a, b) => a.orderIndex - b.orderIndex)
@@ -68,9 +71,44 @@ export default function MobilePreview({
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white transition hover:opacity-80"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white transition hover:opacity-80"
                   >
                     {getIcon(link.platform)}
+                  </a>
+                ))}
+            </div>
+          )}
+
+          {/* Custom Links */}
+          {links.length > 0 && (
+            <div className="w-full space-y-3 mt-4">
+              {links
+                .filter(link => link.isActive)
+                .sort((a, b) => a.orderIndex - b.orderIndex)
+                .map((link) => (
+                  <a
+                    key={link.id}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center w-full rounded-xl border border-gray-300 px-4 py-3 text-center transition bg-white hover:shadow-sm"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div 
+                        className="font-semibold text-slate-900 text-center"
+                        style={{ color: textColor === "#ffffff" ? "#000000" : textColor }}
+                      >
+                        {link.title}
+                      </div>
+                      {link.subtitle && (
+                        <div 
+                          className="text-sm text-slate-600 text-center mt-0.5"
+                          style={{ color: textColor === "#ffffff" ? "#4b5563" : textColor, opacity: 0.8 }}
+                        >
+                          {link.subtitle}
+                        </div>
+                      )}
+                    </div>
                   </a>
                 ))}
             </div>

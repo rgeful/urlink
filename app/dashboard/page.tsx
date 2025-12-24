@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import ProfileSettings from "@/components/dashboard/ProfileSettings";
 import SocialLinks from "@/components/dashboard/SocialLinks";
+import CustomLinks from "@/components/dashboard/CustomLinks";
 import SaveButton from "@/components/dashboard/SaveButton";
 import MobilePreview from "@/components/dashboard/MobilePreview";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import { IconLink } from "@/components/dashboard/SocialLinks";
+import { Link } from "@/components/dashboard/CustomLinks";
 
 export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
@@ -23,6 +25,7 @@ export default function DashboardPage() {
   const [intro, setIntro] = useState("");
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [iconLinks, setIconLinks] = useState<IconLink[]>([]);
+  const [links, setLinks] = useState<Link[]>([]);
   const [cardColor, setCardColor] = useState("#ffffff");
   const [textColor, setTextColor] = useState("#000000");
 
@@ -60,6 +63,15 @@ export default function DashboardPage() {
         
       if (iconsError) console.error("Error loading icons:", iconsError);
 
+      // Fetch Custom Links
+      const { data: customLinks, error: linksError } = await supabase
+        .from("Link")
+        .select("*")
+        .eq("userId", user.id)
+        .order("orderIndex", { ascending: true });
+        
+      if (linksError) console.error("Error loading links:", linksError);
+
       setUserId(user.id);
       setEmail(user.email ?? null);
       setUsername(profile.username);
@@ -71,6 +83,7 @@ export default function DashboardPage() {
       setCardColor(profile.backgroundColor ? (profile.backgroundColor.startsWith("#") ? profile.backgroundColor : `#${profile.backgroundColor}`) : "#ffffff");
       setTextColor(profile.textColor ? (profile.textColor.startsWith("#") ? profile.textColor : `#${profile.textColor}`) : "#000000");
       setIconLinks(icons || []);
+      setLinks(customLinks || []);
 
       setLoading(false);
     }
@@ -121,6 +134,11 @@ export default function DashboardPage() {
                 iconLinks={iconLinks}
                 setIconLinks={setIconLinks}
               />
+              <CustomLinks
+                userId={userId}
+                links={links}
+                setLinks={setLinks}
+              />
               <div className="mt-6 pb-8">
                 <SaveButton username={username} pageName={pageName} intro={intro} cardColor={cardColor} textColor={textColor} />
               </div>
@@ -136,6 +154,7 @@ export default function DashboardPage() {
             username={username}
             intro={intro}
             iconLinks={iconLinks}
+            links={links}
             cardColor={cardColor}
             textColor={textColor}
           />
@@ -170,6 +189,7 @@ export default function DashboardPage() {
                 username={username}
                 intro={intro}
                 iconLinks={iconLinks}
+                links={links}
                 cardColor={cardColor}
                 textColor={textColor}
               />
