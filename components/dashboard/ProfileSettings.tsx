@@ -119,13 +119,13 @@ export default function ProfileSettings({
         <p className="mb-1 text-sm font-medium text-slate-600">Ur Link</p>
         <div className="flex items-center gap-3">
           <div className="flex-1 rounded-full border border-slate-400 bg-white px-4 py-2 text-sm text-slate-600">
-            urlink.app/<span className="font-mono">{username}</span>
+            urlink.fyi/<span className="font-mono">{username}</span>
           </div>
           <button
             type="button"
             className="cursor-pointer rounded-full bg-black px-5 py-2 text-xs font-semibold text-white transition hover:bg-slate-800"
             onClick={() =>
-              navigator.clipboard.writeText(`https://urlink.app/${username}`)
+              navigator.clipboard.writeText(`https://urlink.fyi/${username}`)
             }
           >
             Copy URL
@@ -240,7 +240,7 @@ export default function ProfileSettings({
                 key={color}
                 type="button"
                 onClick={() => setCardColor(color)}
-                className="h-10 w-10 flex-shrink-0 rounded-full border-2 border-slate-300 transition-all hover:scale-110"
+                className="h-10 w-10 shrink-0 rounded-full border-2 border-slate-300 transition-all hover:scale-110"
                 style={{ backgroundColor: color }}
                 aria-label={`Select color ${color}`}
               />
@@ -288,7 +288,7 @@ export default function ProfileSettings({
                 key={color}
                 type="button"
                 onClick={() => setTextColor(color)}
-                className="h-10 w-10 flex-shrink-0 rounded-full border-2 border-slate-300 transition-all hover:scale-110"
+                className="h-10 w-10 shrink-0 rounded-full border-2 border-slate-300 transition-all hover:scale-110"
                 style={{ backgroundColor: color }}
                 aria-label={`Select color ${color}`}
               />
