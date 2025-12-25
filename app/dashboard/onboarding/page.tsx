@@ -133,7 +133,7 @@ export default function OnboardingPage() {
                 Username
               </label>
               <div className="flex items-center rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
-                <span className="text-xs text-slate-500 mr-1">urlink.app/</span>
+                <span className="text-xs text-slate-500 mr-1">urlink.fyi/</span>
                 <input
                   className="flex-1 bg-transparent text-sm outline-none"
                   value={username}
@@ -142,7 +142,7 @@ export default function OnboardingPage() {
                 />
               </div>
               <p className="text-[11px] text-slate-500">
-                This becomes your public link. You can change it later.
+                This becomes your public link. You cannot change it as of now sry :/
               </p>
             </div>
 
