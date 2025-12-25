@@ -9,6 +9,7 @@ const sora = Sora({
 export const metadata: Metadata = {
   title: "UrLink",
   description: "A linktree style web app built with Next.js and Tailwind CSS.",
+  icons: "/UrLinkLogo.svg"
 };
 
 export default function RootLayout({
