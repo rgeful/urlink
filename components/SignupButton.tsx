@@ -9,11 +9,12 @@ export default function SignupButton() {
     >
       <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0">
         <Image
-          src="/UrLinkLogo.svg"
+          src="/UrlinkLogo.svg"
           alt="UrLink Logo"
           width={100}
           height={100}
           className="h-10 w-auto"
+          priority
         />
       </div>
       <span className="text-sm text-black font-medium whitespace-nowrap">create urlink</span>
