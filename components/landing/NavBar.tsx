@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function NavBar() {
@@ -42,18 +43,18 @@ export default function NavBar() {
         </div>
 
         <div className="flex gap-2 sm:gap-3">
-          <a
+          <Link
             href="/login"
             className="px-3 py-2 sm:px-6 sm:py-3 rounded-full border border-gray-300 hover:border-gray-400 transition-colors text-sm sm:text-base"
           >
             login
-          </a>
-          <a
+          </Link>
+          <Link
             href="/signup"
             className="px-3 py-2 sm:px-6 sm:py-3 rounded-full bg-[#111] text-white hover:bg-black transition-colors text-sm sm:text-base"
           >
             sign up
-          </a>
+          </Link>
         </div>
       </header>
     </div>

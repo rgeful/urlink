@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+
 export default function Footer() {
     return (
 <footer className="w-full py-6 mt-20">
@@ -11,7 +13,7 @@ export default function Footer() {
                     className="rounded-2xl hidden md:block"
                   />
         <div className="flex gap-4">
-          <a href="/terms" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">Terms of Service</a>
+          <Link href="/terms" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">Terms of Service</Link>
           <p className="text-sm text-gray-500">&copy; {new Date().getFullYear()} - All rights reserved.</p>
         </div>
       </div>

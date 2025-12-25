@@ -157,10 +157,11 @@ export default function DashboardPage() {
             links={links}
             cardColor={cardColor}
             textColor={textColor}
+            showExternalLink={true}
           />
         </section>
 
-        {/* Mobile Preview Modal - Fullscreen */}
+        {/* Mobile Preview - Fullscreen */}
         {showPreview && (
           <div className="md:hidden fixed inset-0 z-50 bg-white overflow-y-auto">
             <button
