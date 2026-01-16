@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import ProfileSettings from "@/components/dashboard/ProfileSettings";
 import SocialLinks from "@/components/dashboard/SocialLinks";
@@ -12,6 +13,7 @@ import { IconLink } from "@/components/dashboard/SocialLinks";
 import { Link } from "@/components/dashboard/CustomLinks";
 
 export default function DashboardPage() {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [showPreview, setShowPreview] = useState(false);
 
@@ -36,7 +38,7 @@ export default function DashboardPage() {
       } = await supabase.auth.getUser();
 
       if (!user) {
-        window.location.href = "/login";
+        router.push("/login");
         return;
       }
 
@@ -50,7 +52,7 @@ export default function DashboardPage() {
       if (error) console.error(error);
 
       if (!profile?.username) {
-        window.location.href = "/dashboard/onboarding";
+        router.push("/dashboard/onboarding");
         return;
       }
 
@@ -140,7 +142,7 @@ export default function DashboardPage() {
                 setLinks={setLinks}
               />
               <div className="mt-6 pb-8">
-                <SaveButton username={username} pageName={pageName} intro={intro} cardColor={cardColor} textColor={textColor} />
+                <SaveButton pageName={pageName} intro={intro} cardColor={cardColor} textColor={textColor} />
               </div>
             </>
           )}

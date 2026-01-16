@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { AVAILABLE_ICONS, getIcon } from "@/constants/icons";
+import { isValidUrl, getUrlValidationError } from "@/lib/urlValidation";
 
 export interface IconLink {
   id: string;
@@ -38,10 +39,8 @@ export default function SocialLinks({
       return;
     }
 
-    try {
-      new URL(newIconLinkUrl.trim());
-    } catch {
-      alert("Please enter a valid URL");
+    if (!isValidUrl(newIconLinkUrl.trim())) {
+      alert(getUrlValidationError(newIconLinkUrl.trim()));
       return;
     }
 
@@ -83,7 +82,8 @@ export default function SocialLinks({
     const { error } = await supabase
       .from("IconLink")
       .delete()
-      .eq("id", id);
+      .eq("id", id)
+      .eq("userId", userId);
 
     if (error) {
       console.error(error);
@@ -96,21 +96,20 @@ export default function SocialLinks({
 
   async function handleUpdateIconLink(id: string, newUrl: string) {
     if (!newUrl.trim()) {
-      alert("Please enter a valid URL");
+      alert("Please enter a URL");
       return;
     }
 
-    try {
-      new URL(newUrl.trim());
-    } catch {
-      alert("Please enter a valid URL");
+    if (!isValidUrl(newUrl.trim())) {
+      alert(getUrlValidationError(newUrl.trim()));
       return;
     }
 
     const { error } = await supabase
       .from("IconLink")
       .update({ url: newUrl.trim() })
-      .eq("id", id);
+      .eq("id", id)
+      .eq("userId", userId);
 
     if (error) {
       console.error(error);
@@ -187,11 +186,13 @@ export default function SocialLinks({
       supabase
         .from("IconLink")
         .update({ orderIndex: newDraggedOrderIndex })
-        .eq("id", draggedLink.id),
+        .eq("id", draggedLink.id)
+        .eq("userId", userId),
       supabase
         .from("IconLink")
         .update({ orderIndex: newTargetOrderIndex })
-        .eq("id", targetLink.id),
+        .eq("id", targetLink.id)
+        .eq("userId", userId),
     ];
     
     const results = await Promise.all(updates);

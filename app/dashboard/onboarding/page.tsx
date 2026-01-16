@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function OnboardingPage() {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [checkingUser, setCheckingUser] = useState(true);
@@ -18,7 +20,7 @@ export default function OnboardingPage() {
       } = await supabase.auth.getUser();
 
       if (!user) {
-        window.location.href = "/login";
+        router.push("/login");
         return;
       }
 
@@ -81,8 +83,8 @@ export default function OnboardingPage() {
     if (upsertError) {
       console.error(upsertError);
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if ((upsertError as any).code === "23505") {
+      // PostgreSQL error code 23505 = unique_violation
+      if ("code" in upsertError && upsertError.code === "23505") {
         setError("That username is already taken.");
       } else {
         setError(upsertError.message);
@@ -90,7 +92,7 @@ export default function OnboardingPage() {
       return;
     }
 
-    window.location.href = "/dashboard";
+    router.push("/dashboard");
   }
 
   if (checkingUser) {

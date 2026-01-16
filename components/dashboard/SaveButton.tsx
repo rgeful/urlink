@@ -1,21 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
 interface SaveButtonProps {
-  username: string | null;
   pageName: string;
   intro: string;
   cardColor: string;
   textColor: string;
 }
 
-export default function SaveButton({ username, pageName, intro, cardColor, textColor }: SaveButtonProps) {
+export default function SaveButton({ pageName, intro, cardColor, textColor }: SaveButtonProps) {
   const [saving, setSaving] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function getAuthUser() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUserId(user.id);
+      }
+    }
+    getAuthUser();
+  }, []);
 
   async function handleSave() {
-    if (!username) return;
+    if (!userId) return;
     setSaving(true);
 
     const backgroundColor = cardColor.startsWith("#") ? cardColor.slice(1) : cardColor;
@@ -29,7 +39,7 @@ export default function SaveButton({ username, pageName, intro, cardColor, textC
         backgroundColor: backgroundColor,
         textColor: textColorValue,
       })
-      .eq("username", username);
+      .eq("id", userId);
 
     setSaving(false);
 

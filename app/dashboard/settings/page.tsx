@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 
 export default function SettingsPage() {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState<string | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
@@ -18,7 +20,7 @@ export default function SettingsPage() {
       } = await supabase.auth.getUser();
 
       if (!user) {
-        window.location.href = "/login";
+        router.push("/login");
         return;
       }
 
@@ -32,7 +34,7 @@ export default function SettingsPage() {
       if (error) console.error(error);
 
       if (!profile?.username) {
-        window.location.href = "/dashboard/onboarding";
+        router.push("/dashboard/onboarding");
         return;
       }
 
@@ -60,14 +62,14 @@ export default function SettingsPage() {
   async function handleLogout() {
     setLoggingOut(true);
     const { error } = await supabase.auth.signOut();
-    
+
     if (error) {
       console.error("Error signing out:", error);
       setLoggingOut(false);
       return;
     }
 
-    window.location.href = "/login";
+    router.push("/login");
   }
 
   if (loading) {

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import { isValidUrl, getUrlValidationError } from "@/lib/urlValidation";
 
 export interface Link {
   id: string;
@@ -46,10 +47,8 @@ export default function CustomLinks({
       return;
     }
 
-    try {
-      new URL(newLinkUrl.trim());
-    } catch {
-      alert("Please enter a valid URL");
+    if (!isValidUrl(newLinkUrl.trim())) {
+      alert(getUrlValidationError(newLinkUrl.trim()));
       return;
     }
 
@@ -90,7 +89,8 @@ export default function CustomLinks({
     const { error } = await supabase
       .from("Link")
       .delete()
-      .eq("id", id);
+      .eq("id", id)
+      .eq("userId", userId);
 
     if (error) {
       console.error(error);
@@ -107,22 +107,21 @@ export default function CustomLinks({
       return;
     }
 
-    try {
-      new URL(editLinkUrl.trim());
-    } catch {
-      alert("Please enter a valid URL");
+    if (!isValidUrl(editLinkUrl.trim())) {
+      alert(getUrlValidationError(editLinkUrl.trim()));
       return;
     }
 
     const { error } = await supabase
       .from("Link")
-      .update({ 
+      .update({
         title: editLinkTitle.trim(),
         subtitle: editLinkSubtitle.trim() || null,
         url: editLinkUrl.trim(),
         imageUrl: null,
       })
-      .eq("id", id);
+      .eq("id", id)
+      .eq("userId", userId);
 
     if (error) {
       console.error(error);
@@ -213,11 +212,13 @@ export default function CustomLinks({
       supabase
         .from("Link")
         .update({ orderIndex: newDraggedOrderIndex })
-        .eq("id", draggedLink.id),
+        .eq("id", draggedLink.id)
+        .eq("userId", userId),
       supabase
         .from("Link")
         .update({ orderIndex: newTargetOrderIndex })
-        .eq("id", targetLink.id),
+        .eq("id", targetLink.id)
+        .eq("userId", userId),
     ];
     
     const results = await Promise.all(updates);
